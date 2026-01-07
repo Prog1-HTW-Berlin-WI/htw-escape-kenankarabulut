@@ -1,3 +1,4 @@
+package app;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,8 +48,18 @@ public class EscapeApp {
     private void showMainMenu() {
         System.out.println("You're in the main menu");
         System.out.println("What do you want to do next?");
+
+        if(!isGameRunning())
         System.out.println("(1) Start new game");
-        System.out.println("(6) Quit");
+        if(isGameRunning())
+        System.out.println("(2) resume game");
+        if(hasSavedGame())
+        System.out.println("(3) load game");
+        if(isGameRunning())
+        System.out.println("(4) save game");
+        if(hasSavedGame())
+        System.out.println("(5) delete game");
+        System.out.println("(6) close game");
         System.out.println("");
         System.out.println("Please choose a number between 1 and 6: ");
     }
@@ -75,11 +86,26 @@ public class EscapeApp {
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
+                if(!isGameRunning())
                 this.startGame();
                 break;
             case "2":
+                if(isGameRunning()){
+                this.resumeGame();
+                }
                 break;
-            // ...
+            case "3":
+                if(hasSavedGame())
+                this.loadGame();
+                break;
+            case "4":
+                if(isGameRunning())
+                this.saveGame();
+                break;
+            case "5":
+                if(hasSavedGame())
+                this.deleteGame();
+                break;
             case "6":
                 break;
             default:
@@ -87,7 +113,6 @@ public class EscapeApp {
                 break;
         }
     }
-
     /**
     *
     * erstellt neues Spiel und führt Methode "resumeGame()" aus
@@ -118,6 +143,7 @@ public class EscapeApp {
     */
     private void deleteGame() {
         if (new File(SAVE_FILE_NAME).delete()) {
+            game = null;
             System.out.println("Game deleted!");
         }
     }
