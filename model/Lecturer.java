@@ -1,7 +1,12 @@
-package model;
 
 import java.io.Serializable;
 
+/**
+*
+* Klasse Lecturer mit jeweiligen Attributen und Operationen.
+* @author Kenan Karabulut 
+* @author Kevin Kruschel
+*/
 public class Lecturer implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der

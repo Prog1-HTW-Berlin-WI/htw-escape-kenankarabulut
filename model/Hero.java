@@ -1,7 +1,13 @@
-package model;
+
 
 import java.io.Serializable;
 
+/**
+*
+* Klasse Hero mit jeweiligen Attributen und Operationen.
+* @author Kenan Karabulut 
+* @author Kevin Kruschel
+*/
 public class Hero implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der
