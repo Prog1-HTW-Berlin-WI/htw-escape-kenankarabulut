@@ -19,8 +19,7 @@ public class EscapeGame {
     *
     * Konstruktor für die Klasse EscapeGame
     * Erstellt ein neues Objekt der Klasse Hero
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    *
     */
     public EscapeGame() {
         this.hero = new Hero();
@@ -29,8 +28,7 @@ public class EscapeGame {
     /**
     *
     * Prüft ob das Spiel gestartet worden ist und gibt boolean Wert zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return boolean Wert der zeigt, ob Spiel läuft bzw. gestartet wurde
     */
     public boolean isGameRunning() {
         return gameRunning;
@@ -38,9 +36,8 @@ public class EscapeGame {
 
     /**
     *
-    * Setzt den Zustand des Spiels (ob es läuft oder nicht)
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * Setzt den Zustand des Spiels auf laufend oder nicht laufend
+    * @param boolean gameRunning, true oder false je nach dem ob Spiel läuft oder nicht
     */
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
@@ -50,8 +47,7 @@ public class EscapeGame {
     *
     * Prüft ob das Spiel beendet wurde 
     * gibt boolean-Wert zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return boolean Wert der zeigt, ob Spiel beendet wurde
     */
     public boolean isGameFinished() {
         return gameFinished;
@@ -59,9 +55,8 @@ public class EscapeGame {
 
     /**
     *
-    * Setzt den Zustand des Spiels (ob es beendet wurde oder nicht)
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * Setzt den Zustand des Spiels auf beendet wurde oder nicht beendet
+    * @param boolean gameFinished, true oder false je nach dem ob Spiel beendet wurde oder nicht
     */
     public void setGameFinished(boolean gameFinished) {
         this.gameFinished = gameFinished;
@@ -70,8 +65,7 @@ public class EscapeGame {
     /**
     *
     * Startet das Spiel oder setzt es fort(wenn es schon gestartet wurde)
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * 
     */
     public void run() {
         System.out.println("The game has started. Or not?");
@@ -81,8 +75,7 @@ public class EscapeGame {
     *
     * Getter-Methode für den Referenzdatentyp "Hero" 
     * (gibt aktuelles Objekt der Klasse Hero zurück)
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return aktuelles Objekt der Klasse Hero
     */
     public Hero getHero() {
         return hero;

@@ -22,8 +22,7 @@ public class EscapeApp {
     /**
     *
     * Startet das Spiel und initialisiert die Spielumgebung.
-    * @author Kenan Karabulut
-    * @author Kevin Kruschel
+    * 
     */
     public static void main(String[] args) {
         System.out.println("Welcome to the HTW escape");
@@ -42,8 +41,8 @@ public class EscapeApp {
     /**
     *
     * Zeigt die verschiedenen Aktionen im Hauptmenü an
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * unter Berücksichtigung von bestimmten if-Bedingungen
+    * 
     */
     private void showMainMenu() {
         System.out.println("You're in the main menu");
@@ -67,8 +66,7 @@ public class EscapeApp {
     /**
     *
     * Speicher die Spielereinigabe in "userInput" gibt diese als String zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return Eingabe des Spielers
     */
     private String readUserInput() {
         Scanner scanner = new Scanner(System.in);
@@ -80,8 +78,9 @@ public class EscapeApp {
     /**
     *
     * Nimmt Input des Spielers als Parameter und führt jeweilige Aktion(case) aus
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * unter Berücksichtigung von bestimmten if-Bedingungen
+    * @param String input (Eingabe des Spielers)
+    * 
     */
     private void handleUserInput(String input) {
         switch (input) {
@@ -116,8 +115,7 @@ public class EscapeApp {
     /**
     *
     * erstellt neues Spiel und führt Methode "resumeGame()" aus
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * 
     */
     private void startGame() {
         this.game = new EscapeGame();
@@ -126,9 +124,8 @@ public class EscapeApp {
 
     /**
     *
-    * Nimmt Input des Spielers und führt jeweilige Aktion aus
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * Ändert den Zustand des Spiels auf "laufend" und setzt das Spiel fort
+    * 
     */
     private void resumeGame() {
         this.game.setGameRunning(true);
@@ -137,9 +134,9 @@ public class EscapeApp {
 
     /**
     *
-    * löscht den gespeicherten Spielstand
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * löscht den gespeicherten Spielstand und setzt das Spiel zurück
+    * Konsolenausgabe bestätigt erfolgreiche Löschung des Spiels
+    * 
     */
     private void deleteGame() {
         if (new File(SAVE_FILE_NAME).delete()) {
@@ -152,8 +149,8 @@ public class EscapeApp {
     *
     * Versucht das Spiel in einer Datei zu Speichern
     * Wenn Speicherung fehlschlägt gibt Methode eine Fehlermeldung auf der Konsole aus
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    *
+    *
     */
     private void saveGame() {
         try (FileOutputStream fos = new FileOutputStream(SAVE_FILE_NAME);
@@ -171,8 +168,7 @@ public class EscapeApp {
     *
     * Sucht nach einem Spielstand auf dem Rechner und lädt diesen, falls vorhanden
     * Wenn Spielstand nicht geladen werden konnte, gibt Methode eine Fehlermeldung auf der Konsole aus
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * 
     */
     private void loadGame() {
         try (FileInputStream fis = new FileInputStream(SAVE_FILE_NAME);
@@ -187,8 +183,8 @@ public class EscapeApp {
     /**
     *
     * Prüft ob das Spiel gestartet worden ist und gibt boolean Wert zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return boolean Wert der zeigt, ob Spiel existiert
+    * 
     */
     private boolean isGameRunning() {
         return game != null;
@@ -197,8 +193,7 @@ public class EscapeApp {
     /**
     *
     * Prüft ob das Spiel gestartet worden ist und beendet wurde und gibt boolean-Wert zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return boolean Wert der zeigt, ob Spiel existiert und beendet wurde
     */
     private boolean isGameFinished() {
         return game != null && game.isGameFinished();
@@ -207,8 +202,7 @@ public class EscapeApp {
     /**
     *
     * Prüft ob das Spiel gespeichert wurde und gibt boolean-Wert zurück
-    * @author Kenan Karabulut 
-    * @author Kevin Kruschel
+    * @return boolean Wert der zeigt, ob Spielstand existiert 
     */
     private boolean hasSavedGame() {
         return new File(SAVE_FILE_NAME).exists();
