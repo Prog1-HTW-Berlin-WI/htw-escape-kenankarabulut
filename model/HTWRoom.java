@@ -14,4 +14,43 @@ public class HTWRoom implements Serializable {
     // Speicherung als Datei (Serialisierung) und beim Laden (Deserialisierung)
     // konsistent bleibt und Versionierungsprobleme vermieden werden.
     private static final long serialVersionUID = 9065680017147292999L;
+    private String identifier;
+    private String description;
+    private Lecturer lecturer;
+    
+    
+    /**
+     * Konstruktor für die Klasse HTWRoom.
+     * Erzeugt neuen HTWRoom mit seinen Attributen.
+     * @param identifier
+     * @param description
+     * @param lecturer
+     */
+    public HTWRoom(String identifier, String description, Lecturer lecturer) {
+        this.identifier = identifier;
+        this.description = description;
+        this.lecturer = lecturer;
+    }
+
+    /**
+     * Die Methode ist eine Schablone wie die Räume im Spiel angezeigt werden.
+     * wird im EscapeGame unter "explore HTW campus" verwendet.
+     */
+    public void printInfo() {
+        System.out.println("-----------------------");
+        System.out.println("roomnumber: " + identifier );
+        System.out.println("----------");
+        System.out.println("description: " + description);
+        System.out.println("----------");
+        System.out.println("lecturer :" + lecturer);
+        System.out.println("-----------------------");
+    }
+
+
+
+
 }
+
+
+
+
