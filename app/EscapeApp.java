@@ -1,5 +1,6 @@
 package app;
 
+import model.Hero;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -68,7 +69,7 @@ public class EscapeApp {
     * Speicher die Spielereinigabe in "userInput" gibt diese als String zurück
     * @return Eingabe des Spielers
     */
-    private String readUserInput() {
+    public  static String readUserInput() {
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
         // TBD
@@ -85,28 +86,53 @@ public class EscapeApp {
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
-                if(!isGameRunning())
+                if(!isGameRunning()){
                 this.startGame();
                 break;
+                }
+                else{
+                    System.out.println("Invalid input. You allready started a game. You need to delete it first");
+                    break;
+                }
+                
             case "2":
                 if(isGameRunning()){
                 this.resumeGame();
-                }
                 break;
+                }
+                else{
+                    System.out.println("Invalid input. You need to start a game first.");
+                    break;
+                }
             case "3":
-                if(hasSavedGame())
+                if(hasSavedGame()){
                 this.loadGame();
                 break;
+                }
+                else{
+                    System.out.println("Invalid input. You need a saved game first.");
+                    break;
+                }
             case "4":
-                if(isGameRunning())
+                if(isGameRunning()){
                 this.saveGame();
                 break;
+                }
+                else{
+                    System.out.println("Invalid input. You need to start a game if you want so save.");
+                    break;
+                }
             case "5":
-                if(hasSavedGame())
+                if(hasSavedGame()){
                 this.deleteGame();
                 break;
+                }
+                else{
+                    System.out.println("Invalid input. You need to save a game first if you want to delete it.");
+                    break;
+                }
             case "6":
-                break;
+                System.exit(0);
             default:
                 System.out.println("Invalid input. Please choose a correct number between 1 and 6");
                 break;
@@ -118,7 +144,16 @@ public class EscapeApp {
     * 
     */
     private void startGame() {
-        this.game = new EscapeGame();
+        System.out.println("==========================================");
+        System.out.println("Create your hero:");
+        System.out.println("");
+        System.out.println("please enter the name of your hero:");
+        System.out.println("(max. 10 letters)");
+        System.out.println("");
+
+        String nameInput = readUserInput();
+        Hero myHero = new Hero(nameInput);
+        this.game = new EscapeGame(myHero);
         resumeGame();
     }
 

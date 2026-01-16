@@ -32,6 +32,14 @@ public class HTWRoom implements Serializable {
         this.lecturer = lecturer;
     }
 
+    
+
+    public Lecturer getLecturer() {
+        return lecturer;
+    }
+
+
+
     /**
      * Die Methode ist eine Schablone wie die Räume im Spiel angezeigt werden.
      * wird im EscapeGame unter "explore HTW campus" verwendet.
@@ -42,7 +50,7 @@ public class HTWRoom implements Serializable {
         System.out.println("----------");
         System.out.println("description: " + description);
         System.out.println("----------");
-        System.out.println("lecturer :" + lecturer);
+        System.out.println("lecturer :" + getLecturer());
         System.out.println("-----------------------");
     }
 

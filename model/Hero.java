@@ -210,6 +210,10 @@ public class Hero implements Serializable {
      */
     public void takeHealing(int amount){
         this.healthPoints += amount;
+        if (this.healthPoints > 50){
+            System.out.println("You've gained max health!");
+            this.healthPoints = 50;
+        }
     }
 
 
