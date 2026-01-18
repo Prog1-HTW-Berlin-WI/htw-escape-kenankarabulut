@@ -102,7 +102,7 @@ public class EscapeGame {
         System.out.println("-------------------");
         System.out.println("roundCounter: " + this.roundCounter);
         System.out.println("gamemenu:");
-        System.out.println("");
+        System.out.println("\n");
         System.out.println("(1) explore HTW campus");
         System.out.println("(2) show hero status");
         System.out.println("(3) show signature list");
@@ -149,17 +149,18 @@ public class EscapeGame {
      * Zu 52% trifft man auf ein Alien -> Die Wahrscheinlichkeit wird nochmal auf 4 Aliens geteilt.
      * Zu 28% trifft man auf einen Übungsleiter (einer von 5 verschiedenen).
      * Nach jeder Erkundung hat der Spieler die Wahl eine neue Erkundung direkt zu starten.
-     * ->autoExplore bleibt true und eine neue Erkundung wird gestartet
+     * ->exploring bleibt true und eine neue Erkundung wird gestartet.
+     * ->oder exploring wird false gesetzt und man explore wird nicht mehr ausgeführt.
      */
     private void explore(){
     roundCounter++;
-    boolean autoExplore = true;
-        while(roundCounter<=24 && hero.isOperational() && autoExplore == true){
+    boolean exploring = true;
+        while(roundCounter<=24 && hero.isOperational() && exploring == true){
             int possibility = (int) (Math.random() * 100);
 
             if(possibility < 20){
                 rooms[0].printInfo();
-                autoExplore = askNewRound();
+                exploring = askNewExploration();
                 /* 
                 System.out.println("choose an action:");
                 System.out.println("(1) continue exploring");
@@ -173,6 +174,9 @@ public class EscapeGame {
                     case "2":
                         System.out.println("returning to the game menu.....");
                         return;
+                        
+                        -> bei this.explore() ist das Programm abgestürzt, wahrscheinlich weil exlore() in einer Erkundng ausgeführt wurde(Erkundungen stapelten sich)
+
                 }
                 */
             }
@@ -182,15 +186,15 @@ public class EscapeGame {
                     alien1.printMenu();
                     hero.showstats();
                     //alienEncounter();
-                    autoExplore = askNewRound();
+                    exploring = askNewExploration();
             }
             else if(possibility <40){
-                System.out.println("You have encountered nailo the great.....");
+                System.out.println("You have encountered Snailo the great.....");
                 //while(hero.isOperational() && !alien3.isDefeated()){
                     alien3.printMenu();
                     hero.showstats();
                     //alienEncounter();
-                    autoExplore = askNewRound();
+                    exploring = askNewExploration();
                 //}
             }
             else if(possibility < 57){
@@ -199,7 +203,7 @@ public class EscapeGame {
                     alien4.printMenu();
                     hero.showstats();
                     //alienEncounter();
-                    autoExplore = askNewRound();
+                    exploring = askNewExploration();
                 //}
             }
             else if(possibility < 72){
@@ -207,14 +211,14 @@ public class EscapeGame {
                 alien0.printMenu();
                 hero.showstats();
                 alien0.healHero(hero);
-                autoExplore = askNewRound();
+                exploring = askNewExploration();
             }
             else{
             int roomRnndm = (int) (Math.random() * 5);
             HTWRoom room = rooms[roomRnndm];
 
                 if(room.getLecturer() != null){
-                    lecturerEncounter(room.getLecturer(), room);
+                    exploring = lecturerEncounter(room.getLecturer(), room);
                 }
             }
         }
@@ -238,9 +242,10 @@ public class EscapeGame {
      * @return true falls Spieler neue Erkundung startet.
      * @return false falls Spieler in Spielmenü zurrückkehren will.
      */
-    public boolean askNewRound(){
+    public boolean askNewExploration(){
         while(true){
         System.out.println("choose an action:");
+        System.out.println("\n");
         System.out.println("(1) continue exploring");
         System.out.println("(2) return to game menu");
         String choice = EscapeApp.readUserInput();
@@ -264,9 +269,10 @@ public class EscapeGame {
      * Der Spieler hat die Wahl nach einer Unterschrift zu fragen oder den Raum zu verlassen.
      * @param lecturer Übungsleiter dem man begegnet.
      * @param htwRoom in dem sich Übungsleiter befindet.
+     * @return false bei beiden Aktionen -> man kehrt immer ins Spielmenü zurück
      */
 
-    public void lecturerEncounter(Lecturer lecturer, HTWRoom htwRoom){
+    public boolean lecturerEncounter(Lecturer lecturer, HTWRoom htwRoom){
         htwRoom.printInfo();
         while(true){
         System.out.println("\n");
@@ -277,11 +283,12 @@ public class EscapeGame {
                 case "1":
                     if(lecturer.isReadyToSign(hero)){
                     hero.signExerciseLeader(lecturer);
+                    return false;
                     }
                     break; 
                 case "2":
                     System.out.println("returning to the game menu.....");
-                    return;
+                    return false;
                 default:
                 System.out.println("Invalid input. Please choose a correct number between 1 and 2");
                 break;

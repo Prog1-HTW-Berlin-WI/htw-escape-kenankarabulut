@@ -60,7 +60,7 @@ public class EscapeApp {
         if(hasSavedGame())
         System.out.println("(5) delete game");
         System.out.println("(6) close game");
-        System.out.println("");
+        System.out.println("\n");
         System.out.println("Please choose a number between 1 and 6: ");
     }
 
@@ -146,10 +146,10 @@ public class EscapeApp {
     private void startGame() {
         System.out.println("==========================================");
         System.out.println("Create your hero:");
-        System.out.println("");
+        System.out.println("\n");
         System.out.println("please enter the name of your hero:");
         System.out.println("(max. 10 letters)");
-        System.out.println("");
+        System.out.println("\n");
 
         String nameInput = readUserInput();
         Hero myHero = new Hero(nameInput);
