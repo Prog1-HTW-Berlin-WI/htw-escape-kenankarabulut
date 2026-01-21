@@ -27,6 +27,9 @@ public class Lecturer implements Serializable {
         this.name = name;
         this.hasSigned = hasSigned;
     }
+    public Lecturer(String name){
+        this.name = name;
+    }
 
     /**
      * Getter-Methode für das Attribut name.
@@ -44,7 +47,7 @@ public class Lecturer implements Serializable {
      * @return true falls Bedingung erfüllt sonst false
      */
     public boolean isReadyToSign(Hero hero){
-        if (hero.getKillCounter() >=3){
+        if (hero.getKillCounter() >=2){
             return true;
         }
         System.out.println("You couldn't collect that signature. You need to kill 2 Aliens first to obtain that skill");

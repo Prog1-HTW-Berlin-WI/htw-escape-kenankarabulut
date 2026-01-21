@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class EscapeApp {
 
     public static final String SAVE_FILE_NAME = "save";
+    public static int roundCounter;
     private EscapeGame game;
     private boolean gameRunning = true;
 

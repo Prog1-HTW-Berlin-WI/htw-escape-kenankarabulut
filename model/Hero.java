@@ -16,10 +16,9 @@ public class Hero implements Serializable {
     private String name;
     private int healthPoints = 50;
     private int experiencePoints = 0;
-    private Lecturer[] signedExerciseLeaders;
-    private int killCounter;
+    private int killCounter = 2;
+    private Lecturer[] signedExerciseLeaders = new Lecturer [5];
     
-
 
     /**
     *
@@ -30,6 +29,16 @@ public class Hero implements Serializable {
     public int getKillCounter() {
         return killCounter;
     }
+
+    
+    /**
+     * Getter-Methode für den Lecturer Array "signedExerciseLeaders"
+     * @return die Lecturer deren Unterschift schon gesammelt wurden
+     */
+    public Lecturer[] getSignedExerciseLeaders() {
+        return signedExerciseLeaders;
+    }
+
 
 
     /**
@@ -82,7 +91,7 @@ public class Hero implements Serializable {
     System.out.print("You've suffered " + amount + " damage!");
         if (this.healthPoints < 0){
             this.healthPoints = 0;
-            System.out.print("Hero: " + getName()+ "has been defeated");
+            System.out.print("Hero: " + getName()+ " has been defeated!");
         }
     }
    
@@ -102,7 +111,7 @@ public class Hero implements Serializable {
             this.healthPoints += 3;
             System.out.println("You've took a short break and regenerated 3 lifepoints");
         }
-        if (longRest == true){
+        else if(longRest == true){
             this.healthPoints += 10;
             System.out.println("You took a long break and regenerated 10 lifepoints");
         }
@@ -141,15 +150,15 @@ public class Hero implements Serializable {
     int possibility = (int) (Math.random() * 100);
         if(possibility < 75){
             damage = (int) (getExperiencePoints() * 2.3 + 1);
-            System.out.println("You've hit the enemy and dealt: " + damage );
+            System.out.println("You've landed a hit on the Alien!");
         }
         else if(possibility < 88){
             damage = 0;
-            System.out.println("You've missed the enemy and dealt: " + damage );
+            System.out.println("You've missed your attack and dealt no damage!");
         }
         else{
             damage = (int) (getExperiencePoints() * 2.3 + 1) * 2;
-            System.out.println("You've hit the enemy and dealt: " + damage + " *CRITICAL HIT*" );
+            System.out.println("You've landed a hit on the Alien! *CRITICAL HIT*" );
         }
     return damage;
     }
@@ -222,11 +231,40 @@ public class Hero implements Serializable {
      * Wird angezeigt, wenn der Spieler einem Alien begegnet.
      */
     public void showstats(){
-        System.out.println("-----------------------");
+        System.out.println("========================");
         System.out.println("Hero-stats");
         System.out.println("healthpoins: " + healthPoints);
         System.out.println("experiencepoints: " + experiencePoints);
-        System.out.println("-----------------------");
+        System.out.println("========================");
     }
 
+    /**
+     * Liste mit allen Werten des Heros.
+     * beschreibt den Zustand des Heros.
+     */
+
+    public void heroStats(){
+        System.out.println("========================");
+        System.out.println("Hero-state:");
+        System.out.println("------------------------");
+        System.out.println("Hero-name: " + this.name);
+        System.out.println("healthpoints: " + this.healthPoints);
+        System.out.println("experiencepoints: " + this.experiencePoints);
+        System.out.println("Alien-killcount " + this.killCounter);
+    }
+
+    /* 
+    public void heroPaper(Lecturer[] arr ){
+        System.out.println("========================");
+        System.out.println("Signed-Exerciseleaders");
+        System.out.println("\n");
+        
+        for(int i=1; i>=arr.length; i++){
+            System.out.println("Nr." + i + "" + arr[i]);
+        }
+    }
+    */
+
+     
+    
 }

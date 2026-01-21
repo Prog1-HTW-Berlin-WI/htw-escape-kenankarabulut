@@ -79,6 +79,19 @@ public abstract class Alien {
         return this.lifePoints == 0;
     }
 
+    public int attack(Alien alien, int amount){
+    int damage = 0;
+    int possibility = (int) (Math.random() * 100);
+        if(possibility < 70){
+            damage = amount;
+            System.out.println("The alien launches an attack!");
+        }
+        else{
+             damage = 0;
+            System.out.println("The alien missed his attack!");
+        }
+    return damage;
+    }
 
     /**
      * Die Methode ist eine Schablone wie das Kampfmenü gegen ein Alien im Spiel angezeigt werden.

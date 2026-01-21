@@ -23,11 +23,12 @@ public class EscapeGame {
     private boolean gameRunning = true;
     private boolean gameFinished = false;
     private int roundCounter=0;
+    private boolean didBreak= false;
 
     CrazyFrog alien0  = new CrazyFrog();
     Yeti alien1  = new Yeti();
-    Alien alien3 = new AngrySnail(null, 30,"Hello you week student. I am Snailo the great. Behold my power Muhahahaha!");
-    Alien alien4 = new AngrySnail(null, 20,"Hello you week student. I am Simon the destroyer. I may be small but my punches hurt. Lets see if you can keep up!");
+    Alien alien3 = new AngrySnail("Snailo the great", 30,"Hello you week student. I am Snailo the great. Behold my power Muhahahaha!");
+    Alien alien4 = new AngrySnail("Simon the destroyer", 20,"Hello you week student. I am Simon the destroyer. I may be small but my punches hurt. Lets see if you can keep up!");
 
     /**
     *
@@ -44,12 +45,12 @@ public class EscapeGame {
         Lecturer vaseva = new Lecturer("Lecturer Vaseva", false);
         Lecturer gaertner = new Lecturer("Lecturer Gaerner", false);
         
-        rooms[0] = new HTWRoom("XX", "This Room ist empty. You can only hear water dripping down the heating-pipes.", null);
-        rooms[1] = new HTWRoom("*cantine*", "You've entered the cantine. You can allread smell the sizzelning meat of the vegan saussage. In the far you see lecturer Poeser eatin fries....", poeser);
+        rooms[0] = new HTWRoom("XX", "This Room ist empty. You can only hear water dripping down the heating-pipes.");
+        rooms[1] = new HTWRoom("*cantine*", "You've entered the cantine. You can allread smell the sizzelning meat of the vegan saussage. In the far you see lecturer Poeser eating fries....", poeser);
         rooms[2] = new HTWRoom("A 015", "You've entered room A 015. You can see Lecturer gnaoui playing with the Java-hamster......", gnaoui);
         rooms[3] = new HTWRoom("A 142", "You've entered room A 142. You notice writing on the whiteboard which says *Prog Klausur* and Lecturer Safitri checking the ID cards of the students....", safitri);
         rooms[4] = new HTWRoom("A 219", "You've entered room A 219. You can allread hear aggressive clicking-sounds. In the back of the room you see Lecturer Vaseva playing tetris on her laptop", vaseva);
-        rooms[5] = new HTWRoom("*audimax*", "You've entered the Audimax. You see a giant room full of students. In the front you See Lecturer Gaertner programming snake on the huge whiteboard", gaertner);
+        rooms[5] = new HTWRoom("*audimax*", "You've entered the Audimax. You see a giant room full of students. In the front you see Lecturer Gaertner programming snake on a huge whiteboard", gaertner);
     }
 
     /**
@@ -108,7 +109,8 @@ public class EscapeGame {
         System.out.println("(3) show signature list");
         System.out.println("(4) start meditation");
         System.out.println("(5) return to menu");
-        
+        System.out.println("\n");
+        System.out.println("Please choose a number between 1 and 5: ");
         String menuInput = scanner.nextLine();
         handleUserInput(menuInput);
         }
@@ -126,13 +128,13 @@ public class EscapeGame {
                 this.explore();
                 break;
             case "2":
-            
+                this.showStatus();
                 break;
             case "3":
-                
+                this.heroPaper(hero.getSignedExerciseLeaders());
                 break;
             case "4":
-               
+               this.meditation();
                 break;
             case "5":
                 gameRunning = false;
@@ -154,57 +156,33 @@ public class EscapeGame {
      */
     private void explore(){
     roundCounter++;
+    didBreak = false;
     boolean exploring = true;
         while(roundCounter<=24 && hero.isOperational() && exploring == true){
             int possibility = (int) (Math.random() * 100);
 
             if(possibility < 20){
-                rooms[0].printInfo();
+                rooms[0].printInfoXX();
                 exploring = askNewExploration();
-                /* 
-                System.out.println("choose an action:");
-                System.out.println("(1) continue exploring");
-                System.out.println("(2) return to game menu");
-                String choice = EscapeApp.readUserInput();
-                switch (choice) {
-                    case "1":
-                        this.explore();
-                        System.out.println("starting a new round.........");
-                        break; 
-                    case "2":
-                        System.out.println("returning to the game menu.....");
-                        return;
-                        
-                        -> bei this.explore() ist das Programm abgestürzt, wahrscheinlich weil exlore() in einer Erkundng ausgeführt wurde(Erkundungen stapelten sich)
-
-                }
-                */
             }
             else if(possibility < 23){
                 System.out.println("You have encountered the Yeti.....");
-                //while(hero.isOperational() && !alien1.isDefeated()){
-                    alien1.printMenu();
-                    hero.showstats();
-                    //alienEncounter();
+                    
+                    alienEncounter(alien1, 25);   
                     exploring = askNewExploration();
             }
             else if(possibility <40){
                 System.out.println("You have encountered Snailo the great.....");
-                //while(hero.isOperational() && !alien3.isDefeated()){
-                    alien3.printMenu();
-                    hero.showstats();
-                    //alienEncounter();
+                
+                    alienEncounter(alien3, 10);
                     exploring = askNewExploration();
                 //}
             }
             else if(possibility < 57){
                 System.out.println("You have encountered Siomon the destroyer.....");
-                //while(hero.isOperational() && !alien4.isDefeated()){
-                    alien4.printMenu();
-                    hero.showstats();
-                    //alienEncounter();
+                    
+                    alienEncounter(alien4, 15);
                     exploring = askNewExploration();
-                //}
             }
             else if(possibility < 72){
                 System.out.println("You have encountered Crazy frog.....");
@@ -221,6 +199,9 @@ public class EscapeGame {
                     exploring = lecturerEncounter(room.getLecturer(), room);
                 }
             }
+        }
+        if(roundCounter >=24){
+            looseScreen();
         }
     }
 
@@ -244,24 +225,27 @@ public class EscapeGame {
      */
     public boolean askNewExploration(){
         while(true){
-        System.out.println("choose an action:");
-        System.out.println("\n");
-        System.out.println("(1) continue exploring");
-        System.out.println("(2) return to game menu");
-        String choice = EscapeApp.readUserInput();
-            if(choice.equals("1")){
-                System.out.println("starting a new round.........");
-                return true;
-            }
-            else if(choice.equals("2")){
-                    System.out.println("returning to the game menu.....");
-                    return false;
-            }
-            else{
-                System.out.println("Invalid input. Please choose a correct number between 1 and 2");
-            }
+            System.out.println("\n" + "choose an action:");
+            System.out.println("\n");
+            System.out.println("(1) continue exploring");
+            System.out.println("(2) return to game menu");
+            String choice = EscapeApp.readUserInput();
+                if(choice.equals("1")){
+                    System.out.println("starting a new round.........");
+                    roundCounter++;
+                    return true;
+                }
+                else if(choice.equals("2")){
+                        System.out.println("returning to the game menu.....");
+                        return false;
+                }
+                else{
+                    System.out.println("Invalid input. Please choose a correct number between 1 and 2");
+                }
+
         }
     }
+    
 
     /**
      * Methode falls ein Spieler auf einen Übungsleiter trifft.
@@ -294,7 +278,167 @@ public class EscapeGame {
                 break;
             }
         }
+    }
+    
+    /**
+     * Zeigt die Liste mit Informationen des Hero-Status an.
+     * Spieler kann nach Einsicht ins Spielmenü zurückkehren. 
+     */
+    
+    public void showStatus(){
+        hero.heroStats();
+        while(true){
+        System.out.println("\n");
+        System.out.println("(1) return to gamemenu");
+        System.out.println("\n");
+        String input = EscapeApp.readUserInput();
+            if(input.equals("1")){
+                return;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+            }
+        } 
+    }
+
+    /**
+     * Der Spieler hat die Möglichkeit eine kurze oder lange Meditation durchzuführen.
+     * Bei einer kurzen Meditation regeneriert der Spieler 3 HP und didBreak wird true gesetzt, wodurch keine kurze Meditation mehr möglich ist.
+     * Bei einer langen Meditation regeneriert der Spieler 10 HP und eine Runde vergeht.
+     */
+    public void meditation(){
+        
+        while(true){
+            System.out.println("=====================");
+            System.out.println("meditation-menu:");
+            System.out.println("\n");
+            System.out.println("(1) short meditation(3HP) -> possible once a round");
+            System.out.println("(2) long meditation(10HP) -> costs one round");
+            System.out.println("\n");
+            System.out.println("(3) return to gamemenu");
+            System.out.println("choose an action:");
+            System.out.println("\n");
+            String meditationinput = EscapeApp.readUserInput();
+            
+
+            switch (meditationinput) {
+                case "1":
+                    if(didBreak == false){
+                    hero.regenerate(false);
+                    didBreak = true;
+                    break;
+                    }
+                    else{
+                        System.out.println("You allready took a short break. You need to start a new round first!");
+                        break;
+                    } 
+                case "2":
+                    hero.regenerate(true);
+                    roundCounter++;
+                    didBreak=  false;
+                    break;
+                case "3":
+                    System.out.println("returning to the gamemenu........");
+                    return;
+                default:
+                System.out.println("Invalid input. Please choose a correct number between 1 and 3");
+                break;
+            }
+        }
+    }
+    /**
+     * Nimmt einen Lecturer-Array und gibt den Laufzettel mit den Lecturern aus.
+     * Spieler kann nach Einsicht des Laufzettels ins Spielmenü zurückkehren.
+     * @param arr Array der Lecturer, deren Unterschrift schon gesammelt wurde
+     */
+    public void heroPaper(Lecturer[] arr ){
+        System.out.println("========================");
+        System.out.println("Signed-Exerciseleaders");
+        System.out.println("\n");
+        
+        for(int i=0; i<arr.length; i++){
+            if(arr[i] != null){
+                System.out.println("Nr." + (i+1) + " " + arr[i].getName());
+            }
+            else{
+                System.out.println("Nr."+ (i+1) + " *empty*");
+            }
+        }
+        while(true){
+        System.out.println("\n");
+        System.out.println("(1) return to gamemenu");
+        System.out.println("\n");
+        String input = EscapeApp.readUserInput();
+            if(input.equals("1")){
+                return;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+            }
+        }
+     
+    }
+
+    public void alienEncounter(Alien alien, int amount){
+        System.out.println("What are you going to do?");
+        while(hero.isOperational() && !alien.isDefeated()){
+            alien.printMenu();
+            hero.showstats();
+            System.out.println("----------------");
+            System.out.println("(1) attack");
+            System.out.println("(2) flee");
+            System.out.println("\n");
+            String choice = EscapeApp.readUserInput();
+
+            if(choice.equals("1")){
+                int heroDamage = hero.attack();
+                alien.takeDamage(heroDamage);
+                if(alien.isDefeated()){
+                    System.out.println("The Alien has been defeated! Returning to the gamemenu....");
+                }
+            }
+            else if(choice.equals("2")){
+                hero.flee();
+                return;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+
+            }
+            if(!alien.isDefeated()){
+                System.out.println("The alien prepares an attack!");
+                int alienDamage = alien.attack(alien, amount);
+                hero.takeDamage(alienDamage);
+            }
+
+        }
+    }
+
+    private void looseScreen(){
+        System.out.println("----------------------");
+        System.out.println("GAME OVER:");
+        System.out.println("You didn't manage to collect all the certificates in time.");
+        System.out.println("\n");
+        System.out.println("Prof. Majuntke: You really bore me.");
+        System.out.println("I have no time for beginners.");
+        System.out.println("Have fun with my aliens for the rest of your life!");
+        System.out.println("MUHAHAHAHA!");
+        System.out.println("Beam me up, Scotty!");
+        System.out.println("\n");
+        System.out.println("*Prof. Majuntke gets beamt into the ufo and flies into the abyss...*");
+        System.out.println("\n");
+        System.out.println("(1) return to the main menu");
+        System.out.println("\n");
+        System.out.println("Choose an action");
+        System.out.println("\n");
+        System.out.println("----------------------");
+        
+        String input = EscapeApp.readUserInput();
+        if(input.equals("1")){
+            gameRunning = false;
+        }
 
 
-    } 
+    }
+
 }
