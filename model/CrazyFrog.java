@@ -1,11 +1,19 @@
 package model;
 
+/**
+*
+* Klasse CrazyFrog mit jeweiligen Attributen und Operationen.
+* für das freundlich gesinnte Alien, welches des Spieler heilt.
+* Unterklasse der Klasse Alien
+* @author Kenan Karabulut 
+* @author Kevin Kruschel
+*/
 public class CrazyFrog extends Alien {
 
-    private String greeting;
     
     /**
      * Konstruktor für die Klasse AngrySnail (Unterklasse von Alien)
+     * Erzeugt CrazyFrog mit seinen Attributen.
      * 
      */
     public CrazyFrog(){

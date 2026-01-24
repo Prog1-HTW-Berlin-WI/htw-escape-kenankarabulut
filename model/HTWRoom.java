@@ -17,6 +17,7 @@ public class HTWRoom implements Serializable {
     private String identifier;
     private String description;
     private Lecturer lecturer;
+    private Majuntke majuntke;
     
     
     /**
@@ -26,10 +27,24 @@ public class HTWRoom implements Serializable {
      * @param description Beschreibung des Raumes
      * @param lecturer Lecturer der sich im Raum befindet
      */
-    public HTWRoom(String identifier, String description, Lecturer lecturer) {
+    public HTWRoom(String identifier, String description, Lecturer lecturer){
         this.identifier = identifier;
         this.description = description;
         this.lecturer = lecturer;
+    }
+
+    /**
+     * Konstruktor für die Klasse HTWRoom.
+     * Erzeugt neuen HTWRoom mit seinen Attributen.
+     * (für die Begegnung mit Prof. Majuntke)
+     * @param identifier
+     * @param description
+     * @param majuntke
+     */
+    public HTWRoom(String identifier, String description, Majuntke majuntke){
+        this.identifier = identifier;
+        this.description = description;
+        this.majuntke = majuntke;
     }
 
     /**
@@ -51,8 +66,10 @@ public class HTWRoom implements Serializable {
     public Lecturer getLecturer() {
         return lecturer;
     }
-    
 
+    public Majuntke getMajuntke() {
+        return majuntke;
+    }
 
     /**
      * Die Methode ist eine Schablone wie die Räume im Spiel angezeigt werden.
@@ -83,6 +100,19 @@ public class HTWRoom implements Serializable {
         System.out.println("-----------------------");
     }
 
+    /**
+     * Die Methode ist eine Schablone wie die Räume im Spiel angezeigt werden.
+     * wird im EscapeGame unter "explore HTW campus" verwendet.
+     */
+    public void printInfoMA() {
+        System.out.println("-----------------------");
+        System.out.println("roomnumber: " + identifier );
+        System.out.println("----------");
+        System.out.println("description: " + description);
+        System.out.println("----------");
+        System.out.println("lecturer :" + majuntke.getName());
+        System.out.println("-----------------------");
+    }
 
 
 

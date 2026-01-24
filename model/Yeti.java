@@ -1,15 +1,17 @@
 package model;
 
 public class Yeti extends Alien {
-
-    private String greeting;
+    
+    private int lifePoints;
     
     /**
-     * Konstruktor für die Klasse Yeti (Unterklasse von Alien)
+     * Konstruktor für die Klasse Yeti (Unterklasse von Alien).
+     * Erzeugt Yeti mit seinen Attributen.
      */
     public Yeti(){
-        super("Yeti", 200, false,"AAAAAAAARRRRRRGGGGGGHHH IM HUNGRY. I have no idea how I've got here!. Ohhh you look tasty...... ");
+        super("Yeti", 200, false,"\"AAAAAAAARRRRRRGGGGGGHHH IM HUNGRY. I have no idea how I've got here!. Ohhh you look tasty...... \"");
     }
+
 
     @Override
     public String getName() {
@@ -29,6 +31,18 @@ public class Yeti extends Alien {
     @Override
     public void printMenu() {
         super.printMenu();
+    }
+
+
+
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+
+
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
     
     

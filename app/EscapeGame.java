@@ -2,6 +2,8 @@ package app;
 
 import model.Hero;
 import model.Lecturer;
+import model.Majuntke;
+import model.Questions;
 import model.Yeti;
 
 import java.util.Scanner;
@@ -19,23 +21,25 @@ import model.HTWRoom;
 */
 public class EscapeGame {
     private final Hero hero;
-    private final HTWRoom[] rooms = new HTWRoom[6];
+    private final HTWRoom[] rooms = new HTWRoom[7];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
     private int roundCounter=0;
     private boolean didBreak= false;
+    private final Questions[] questions = new Questions[3];
 
     CrazyFrog alien0  = new CrazyFrog();
     Yeti alien1  = new Yeti();
-    Alien alien3 = new AngrySnail("Snailo the great", 30,"Hello you week student. I am Snailo the great. Behold my power Muhahahaha!");
-    Alien alien4 = new AngrySnail("Simon the destroyer", 20,"Hello you week student. I am Simon the destroyer. I may be small but my punches hurt. Lets see if you can keep up!");
+    AngrySnail alien3 = new AngrySnail("Snailo the great", 30,"\"Hello you week student. I am Snailo the great. Behold my power Muhahahaha!\"");
+    AngrySnail alien4 = new AngrySnail("Simon the destroyer", 12,"\"Hello you week student. I am Simon the destroyer. I may be small but my punches hurt. Lets see if you can keep up!\"");
+    Majuntke majuntke = new Majuntke();
+    
 
     /**
     *
     * Konstruktor für die Klasse Escapegame
-     * Erzeugt ein neues EscapeGame und setzt einen Wert für seine Attribute fest
-     * Die Begrüßung variiert danach ob das Alien freundlich gesinnt ist oder nicht
-    *
+    * Erzeugt ein neues EscapeGame und setzt einen Wert für seine Attribute fest
+    * Die Begrüßung variiert danach ob das Alien freundlich gesinnt ist oder nicht
     */
     public EscapeGame(Hero hero) {
         this.hero = hero;
@@ -44,6 +48,10 @@ public class EscapeGame {
         Lecturer safitri = new Lecturer("Lecturer Safitri", false);
         Lecturer vaseva = new Lecturer("Lecturer Vaseva", false);
         Lecturer gaertner = new Lecturer("Lecturer Gaerner", false);
+
+        questions[0] = new Questions("\"What does the static keyword refer to in Java?\"", " An objekt", "A data type", "An element", "A class",4);
+        questions[1] = new Questions("\"Which data type would be used to represent the Roman numeral *VI* ?\"", "A String", "A char", "An integer", "A boolean", 1);
+        questions[2] = new Questions("\"Which keyword is used to prevent a class from being subclassed ?\"", "static", "private", "final", "abstract", 3);
         
         rooms[0] = new HTWRoom("XX", "This Room ist empty. You can only hear water dripping down the heating-pipes.");
         rooms[1] = new HTWRoom("*cantine*", "You've entered the cantine. You can allread smell the sizzelning meat of the vegan saussage. In the far you see lecturer Poeser eating fries....", poeser);
@@ -51,6 +59,7 @@ public class EscapeGame {
         rooms[3] = new HTWRoom("A 142", "You've entered room A 142. You notice writing on the whiteboard which says *Prog Klausur* and Lecturer Safitri checking the ID cards of the students....", safitri);
         rooms[4] = new HTWRoom("A 219", "You've entered room A 219. You can allread hear aggressive clicking-sounds. In the back of the room you see Lecturer Vaseva playing tetris on her laptop", vaseva);
         rooms[5] = new HTWRoom("*audimax*", "You've entered the Audimax. You see a giant room full of students. In the front you see Lecturer Gaertner programming snake on a huge whiteboard", gaertner);
+        rooms[6] = new HTWRoom("BOSS-ROOM", "As you collect your last signature you hear can hear a can hear a weird sound comming from the roof of the college building *⊑⟒⌰⌰⍜ ỻ⎍⋔⏃⋏⌇*. You decide to follow the weird sounds and see Prof. Majuntke sitting on a thrown next to a ufo", majuntke);
     }
 
     /**
@@ -121,7 +130,6 @@ public class EscapeGame {
      * gibt bei ungültiger Eingabe eine Fehlermeldung aus.
      * @param menuInput
      */
-
     private void handleUserInput(String menuInput) {
         switch (menuInput) {
             case "1":
@@ -158,7 +166,7 @@ public class EscapeGame {
     roundCounter++;
     didBreak = false;
     boolean exploring = true;
-        while(roundCounter<=24 && hero.isOperational() && exploring == true){
+        while(roundCounter<=24 && hero.isOperational() && exploring == true && !gameFinished && hero.lectCounter <5){
             int possibility = (int) (Math.random() * 100);
 
             if(possibility < 20){
@@ -168,20 +176,23 @@ public class EscapeGame {
             else if(possibility < 23){
                 System.out.println("You have encountered the Yeti.....");
                     
-                    alienEncounter(alien1, 25);   
+                    alienEncounter(alien1, 25);
+                    alien1.setLifePoints(200); 
                     exploring = askNewExploration();
             }
-            else if(possibility <40){
+            else if(possibility <33){
                 System.out.println("You have encountered Snailo the great.....");
                 
                     alienEncounter(alien3, 10);
+                    alien3.setLifePoints(30);
                     exploring = askNewExploration();
-                //}
+        
             }
             else if(possibility < 57){
                 System.out.println("You have encountered Siomon the destroyer.....");
                     
                     alienEncounter(alien4, 15);
+                    alien4.setLifePoints(12);
                     exploring = askNewExploration();
             }
             else if(possibility < 72){
@@ -200,8 +211,15 @@ public class EscapeGame {
                 }
             }
         }
-        if(roundCounter >=24){
+        if(roundCounter >=24 || !hero.isOperational()){
             looseScreen();
+            gameFinished = true;
+        }
+        if(hero.lectCounter >=5){
+            int questRnndm = (int) (Math.random() * 3);
+            Questions quest = questions[questRnndm];
+            finalEncounter(quest);
+            return;
         }
     }
 
@@ -230,18 +248,18 @@ public class EscapeGame {
             System.out.println("(1) continue exploring");
             System.out.println("(2) return to game menu");
             String choice = EscapeApp.readUserInput();
-                if(choice.equals("1")){
-                    System.out.println("starting a new round.........");
-                    roundCounter++;
-                    return true;
-                }
-                else if(choice.equals("2")){
-                        System.out.println("returning to the game menu.....");
-                        return false;
-                }
-                else{
-                    System.out.println("Invalid input. Please choose a correct number between 1 and 2");
-                }
+            if(choice.equals("1")){
+                System.out.println("starting a new round.........");
+                roundCounter++;
+                return true;
+            }
+            else if(choice.equals("2")){
+                    System.out.println("returning to the game menu.....");
+                    return false;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number between 1 and 2");
+            }
 
         }
     }
@@ -255,7 +273,6 @@ public class EscapeGame {
      * @param htwRoom in dem sich Übungsleiter befindet.
      * @return false bei beiden Aktionen -> man kehrt immer ins Spielmenü zurück
      */
-
     public boolean lecturerEncounter(Lecturer lecturer, HTWRoom htwRoom){
         htwRoom.printInfo();
         while(true){
@@ -279,7 +296,42 @@ public class EscapeGame {
             }
         }
     }
-    
+
+    /**
+     * Methode nimmt zufällige Frage und zeigt diese an.
+     * Raum mit Frau Majuntke wird angezeigt.
+     * Der Spieler hat die Chance in zwei Versuchen eine Multiple-Choice Frage richtig zu beantworten um das Spiel zu gewinnen.
+     * Im zweiten Versuch wird wieder eine zufällige Frage von 3 ausgewählt.
+     * Wenn spieler im zweiten Versuch Frage falsch beantwortet, verliert er.
+     * @param actualQuestion Frage die zufällig in der Methode explore() ausgewählt wurde.
+     */
+    private void finalEncounter(Questions actualQuestion){
+        int guess= 0;
+        Scanner scanner = new Scanner(System.in);
+        rooms[6].printInfoMA();
+        while(guess <2){
+            actualQuestion.showQuest();
+            int answ = scanner.nextInt();
+            if(actualQuestion.isRightAnswer(answ) == true && guess<2){
+                winScreen();
+                break;
+            }
+            else{
+                guess++;
+                if(guess <2){
+                    System.out.println("Here you week student. I will give you another try. Dont dissapoint me!");
+                    int nextQest = (int) (Math.random() * 3);
+                    actualQuestion = questions[nextQest];
+                }
+            }
+        }
+        if(guess >=2){
+            looseScreen();
+        }      
+    }
+
+
+
     /**
      * Zeigt die Liste mit Informationen des Hero-Status an.
      * Spieler kann nach Einsicht ins Spielmenü zurückkehren. 
@@ -307,7 +359,6 @@ public class EscapeGame {
      * Bei einer langen Meditation regeneriert der Spieler 10 HP und eine Runde vergeht.
      */
     public void meditation(){
-        
         while(true){
             System.out.println("=====================");
             System.out.println("meditation-menu:");
@@ -320,7 +371,6 @@ public class EscapeGame {
             System.out.println("\n");
             String meditationinput = EscapeApp.readUserInput();
             
-
             switch (meditationinput) {
                 case "1":
                     if(didBreak == false){
@@ -379,6 +429,14 @@ public class EscapeGame {
      
     }
 
+    /**
+     * Im Falle eines Kampfes kann der Spieler kämpfen oder Fliehen.
+     * Nach Aktion des Heros führt das Alien eine Attacke aus(kann Hero treffen oder verfehlen).
+     * Kampf ist abhängig vom Alien und Anzahl der Schadenspunkte, welche das Alien verursacht.
+     * Wärend des Kampfes wird eine kleine Statusanzeige des Heros und des Aliens angezeigt.
+     * @param alien Alien welches man bekämpft
+     * @param amount Schadenspunkte welche das Alien verursacht 
+     */
     public void alienEncounter(Alien alien, int amount){
         System.out.println("What are you going to do?");
         while(hero.isOperational() && !alien.isDefeated()){
@@ -414,16 +472,21 @@ public class EscapeGame {
         }
     }
 
+
+    /**
+     * Wird angezeigt wenn der Hero das Spiel verliert.
+     * beendet das Spiel.
+     */
     private void looseScreen(){
         System.out.println("----------------------");
         System.out.println("GAME OVER:");
         System.out.println("You didn't manage to collect all the certificates in time.");
         System.out.println("\n");
-        System.out.println("Prof. Majuntke: You really bore me.");
-        System.out.println("I have no time for beginners.");
+        System.out.println("Prof. Majuntke: \"You really bore me.\"");
+        System.out.println("\"I have no time for beginners.\"");
         System.out.println("Have fun with my aliens for the rest of your life!");
-        System.out.println("MUHAHAHAHA!");
-        System.out.println("Beam me up, Scotty!");
+        System.out.println("\"MUHAHAHAHA!\"");
+        System.out.println("\"Beam me up, Scotty!\"");
         System.out.println("\n");
         System.out.println("*Prof. Majuntke gets beamt into the ufo and flies into the abyss...*");
         System.out.println("\n");
@@ -433,12 +496,50 @@ public class EscapeGame {
         System.out.println("\n");
         System.out.println("----------------------");
         
-        String input = EscapeApp.readUserInput();
-        if(input.equals("1")){
-            gameRunning = false;
+        while(true){
+            String input = EscapeApp.readUserInput();
+            if(input.equals("1")){
+                gameFinished = true;
+                gameRunning = false;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+            }
         }
-
-
     }
+
+    /**
+     * Wird angezeigt wenn der Hero das Spiel gewinnt.
+     * beendet das Spiel.
+     */
+    private void winScreen(){
+        System.out.println("===========================");
+        System.out.println("CONGRATULATIONS!");
+        System.out.println("\n");
+        System.out.println("Prof. Majuntke \"Not bad you really got it!");
+        System.out.println("Here take this certificate and keep working on your java-skills: *cerftificate*\"");
+        System.out.println("Prof. Majuntke turns around and enters her ufo. As she turns away you notice a green spot on her neck.");
+        System.out.println("The ufo starts with a loud noise and heads into the abyss.");
+        System.out.println("\n");
+        System.out.println("*The entrance door suddenly opens*");
+        System.out.println("(1) leave the college");
+        System.out.println("\n");
+        System.out.println("Choose an action:");
+        System.out.println("\n");
+        System.out.println("===========================");
+        
+        while(true){
+            String choice = EscapeApp.readUserInput();
+            if(choice.equals("1")){
+               gameFinished = true;
+               gameRunning = false; 
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+            }
+        }
+    }
+
+    
 
 }

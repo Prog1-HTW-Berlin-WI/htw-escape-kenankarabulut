@@ -25,9 +25,9 @@ public abstract class Alien {
      * Konstruktor für die Klasse Alien
      * Erzeugt neues Alien mit seinen Attributen
      * Die Begrüßung variiert danach ob das Alien freundlich gesinnt ist oder nicht
-     * @param name
-     * @param lifePoints
-     * @param friendly
+     * @param name Name des Aliens.
+     * @param lifePoints Anzahl der Lebenspunkte
+     * @param friendly ob das Alien feindlich gesinnt ist
      */
 
     public Alien(String name, int lifePoints, boolean friendly, String greeting) {
@@ -35,15 +35,11 @@ public abstract class Alien {
         this.lifePoints = lifePoints;
         this.friendly = friendly;
         this.greeting = greeting;
-
-       // if(this.friendly == true){
-            //this.greeting ="Hello dear student. Do you want to train programming with me :)?";
-       // }
-        //else{
-        //    this.greeting ="Muhahaha you week student behold my power!";
-        //}
     }
-    
+
+    public Alien(String name){
+        this.name =name;
+    }
 
     /**
     *
@@ -79,20 +75,25 @@ public abstract class Alien {
         return this.lifePoints == 0;
     }
 
+    /**
+     * Das Alien kann den Hero zu 50% treffen und eine bestimme Anzahl an Schaden hinzufügen.
+     * In allen anderen Fällen verfehlt das Alien die Attacke und fügt dem Hero keinen Schaden hinzu.
+     * 
+     * @param alien Alien, welches den Hero attackiert
+     * @param amount Anzahl an Schaden welches das Alien verursachen kann
+     * @return tatsächlich verursachter Schaden
+     */
     public int attack(Alien alien, int amount){
-    int damage = 0;
     int possibility = (int) (Math.random() * 100);
-        if(possibility < 70){
-            damage = amount;
+        if(possibility < 50){
             System.out.println("The alien launches an attack!");
+            return amount;
         }
         else{
-             damage = 0;
             System.out.println("The alien missed his attack!");
+            return amount =0;
         }
-    return damage;
     }
-
     /**
      * Die Methode ist eine Schablone wie das Kampfmenü gegen ein Alien im Spiel angezeigt werden.
      *

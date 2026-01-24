@@ -18,7 +18,7 @@ public class Hero implements Serializable {
     private int experiencePoints = 0;
     private int killCounter = 2;
     private Lecturer[] signedExerciseLeaders = new Lecturer [5];
-    
+    public int lectCounter=0;
 
     /**
     *
@@ -192,6 +192,7 @@ public class Hero implements Serializable {
             if (signedExerciseLeaders[i] == null){
                 signedExerciseLeaders[i] = lecturer;
                 System.out.println("You've collected "+ lecturer.getName() +"'s signature!" );
+                lectCounter++;
                 return;
             }
         }
@@ -252,19 +253,5 @@ public class Hero implements Serializable {
         System.out.println("experiencepoints: " + this.experiencePoints);
         System.out.println("Alien-killcount " + this.killCounter);
     }
-
-    /* 
-    public void heroPaper(Lecturer[] arr ){
-        System.out.println("========================");
-        System.out.println("Signed-Exerciseleaders");
-        System.out.println("\n");
-        
-        for(int i=1; i>=arr.length; i++){
-            System.out.println("Nr." + i + "" + arr[i]);
-        }
-    }
-    */
-
-     
     
 }
