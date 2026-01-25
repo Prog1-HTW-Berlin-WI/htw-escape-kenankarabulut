@@ -16,7 +16,7 @@ public class Hero implements Serializable {
     private String name;
     private int healthPoints = 50;
     private int experiencePoints = 0;
-    private int killCounter = 0;
+    public int killCounter = 0;
     private Lecturer[] signedExerciseLeaders = new Lecturer [5];
     public int lectCounter=0;
 
@@ -31,9 +31,16 @@ public class Hero implements Serializable {
     }
 
     
+    
+    public void setKillCounter(int killCounter) {
+        this.killCounter = killCounter;
+    }
+
+
+
     /**
      * Getter-Methode für den Lecturer Array "signedExerciseLeaders"
-     * @return die Lecturer deren Unterschift schon gesammelt wurden
+     * @return die Lecturer deren Unterschrift schon gesammelt wurden
      */
     public Lecturer[] getSignedExerciseLeaders() {
         return signedExerciseLeaders;
@@ -64,7 +71,7 @@ public class Hero implements Serializable {
     *
     * Getter-Methode für das Attribut HealthPoints.
     * (gibt aktuelle Anzahl der Healthpoints zurück)
-    * @return experiencePoints
+    * @return healthPoints
     */
     public int getHealthPoints() {
         return healthPoints;
@@ -101,10 +108,10 @@ public class Hero implements Serializable {
     * Dabei kann er aus zwei Optionen wählen.
     * ist longRest = true heilt der Held 3LP.
     * ist longRest = false heilt der Held 10LP.
-    * Es gib eine Konsolenausgabe mit der Anzahl der regnenerierten LP.
+    * Es gibt eine Konsolenausgabe mit der Anzahl der regenerierten LP.
     * und eine Ausgabe falls max Anzahl an LP erreicht wurde.
     * 
-    * @param longRest boolscher Wert der bestimmt ob es eine lange oder kurze Pause ist
+    * @param longRest boolescher Wert der bestimmt ob es eine lange oder kurze Pause ist
     */
     public void regenerate(boolean longRest) {
         if (longRest == false){
@@ -168,7 +175,7 @@ public class Hero implements Serializable {
      * @return true wenn Lecturer unterschrieben hat.
      * @return false wenn Lecturer noch nicht unterschrieben hat.
      */
-    public boolean isSignedExcerciseLeader(Lecturer lecturer) {
+    public boolean isSignedExerciseLeader(Lecturer lecturer) {
         for(int i=0; i<signedExerciseLeaders.length; i++){
             if (signedExerciseLeaders[i] == lecturer) {
                 return true;
@@ -180,11 +187,11 @@ public class Hero implements Serializable {
     /**
      *  
      * Ermöglicht es dem Helden die Unterschrift des Lecturers auf den Laufzettel zu schreiben.
-     * Konsolenausgabe falls Unterschift eingesammelt wurde oder Fehlermeldung, wenn Hero Unterschrift schon besitzt.
+     * Konsolenausgabe falls Unterschrift eingesammelt wurde oder Fehlermeldung, wenn Hero Unterschrift schon besitzt.
      * @param lecturer bei dem die Unterschift auf Laufzettel geschrieben werden soll
      */
     public void signExerciseLeader (Lecturer lecturer){
-        if(isSignedExcerciseLeader(lecturer)){
+        if(isSignedExerciseLeader(lecturer)){
             System.out.println("Action failed. You already got the signature of this exercise leader");
             return;
         }
@@ -198,7 +205,7 @@ public class Hero implements Serializable {
         }
     }
     /**
-     * Addiert die Erfahrensppunkte zu den aktuellen Erfahrungspunkten.
+     * Addiert die Erfahrenspunkte zu den aktuellen Erfahrungspunkten.
      * @param experiencePoints (Erfahrenspunkte die addiert werden)
      */
     public void addExperiencePoints(int experiencePoints){

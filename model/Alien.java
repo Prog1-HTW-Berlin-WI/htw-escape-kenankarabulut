@@ -48,8 +48,23 @@ public abstract class Alien {
     return name;
     }
 
+    /**
+     * Prüft, ob das Alien freundich oder feindlich gesinnt ist.
+     * @return true, wenn freundlich
+     * @return false, wenn feindlich
+     */
     public boolean isFriendly() {
         return friendly;
+    }
+
+    
+
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
 
     public void setFriendly(boolean friendly) {
@@ -64,10 +79,10 @@ public abstract class Alien {
     */
     public void takeDamage(int amount) {
         this.lifePoints -= amount;
-        System.out.println("Alien: " + getName() + "suffered " + amount + "damage.");
+        System.out.println("Alien: " + getName() + "suffered " + amount + " damage.");
             if (this.lifePoints < 0){
                 this.lifePoints = 0;
-                System.out.print("Alien: " + getName()+ "has been defeated and crawls away.");
+                System.out.print("Alien: " + getName()+ " has been defeated and crawls away.");
             }
     }
 

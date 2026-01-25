@@ -17,14 +17,4 @@ public class Majuntke extends Alien{
         super("FINAL BOSS-PROF. MAJUNTKE");
     }
 
-
-    /* 
-    public void questions(){
-        System.out.println("-----------------");
-        System.out.println("QUESTION");
-        System.out.println("-----------------");
-
-    }
-    */
-    
 }

@@ -42,7 +42,7 @@ public class EscapeApp {
     /**
     *
     * Zeigt die verschiedenen Aktionen im Hauptmenü an.
-    * unter Berücksichtigung von bestimmten If-Bedingungen.
+    * Unter Berücksichtigung von bestimmten If-Bedingungen.
     */
     private void showMainMenu() {
         System.out.println("You're in the main menu");
@@ -77,9 +77,9 @@ public class EscapeApp {
 
     /**
     *
-    * Nimmt Eingabe des Spielers als Parameter und führt jeweilige Aktion(case) aus.
+    * Nimmt die Eingabe des Spielers als Parameter und führt jeweilige Aktion(case) aus.
     * Unter Berücksichtigung von bestimmten if-Bedingungen.
-    * @param String input (Eingabe des Spielers)
+    * @param input (Eingabe des Spielers)
     */
     private void handleUserInput(String input) {
         switch (input) {
@@ -139,11 +139,12 @@ public class EscapeApp {
 
     /**
     *
-    * Erstellt neues Spiel und Erstellt einen Hero.
+    * Erstellt ein neues Spiel und erzeugt einen Hero.
     * Eingabe des Spielers ist Name des Heros.
     */
     private void startGame() {
         while(true){
+            showIntro();
             System.out.println("==========================================");
             System.out.println("Create your hero:");
             System.out.println("\n");
@@ -176,7 +177,7 @@ public class EscapeApp {
 
     /**
     *
-    * löscht den gespeicherten Spielstand und setzt das Spiel zurück.
+    * Löscht den gespeicherten Spielstand und setzt das Spiel zurück.
     * Konsolenausgabe bestätigt erfolgreiche Löschung des Spiels.
     */
     private void deleteGame() {
@@ -188,7 +189,7 @@ public class EscapeApp {
 
     /**
     *
-    * Versucht das Spiel in einer Datei zu Speichern.
+    * Versucht das Spiel in einer Datei zu speichern.
     * Wenn Speicherung fehlschlägt, gibt Methode eine Fehlermeldung auf der Konsole aus.
     */
     private void saveGame() {
@@ -205,7 +206,7 @@ public class EscapeApp {
 
     /**
     *
-    * Sucht nach einem Spielstand auf dem Rechner und lädt diesen falls vorhanden.
+    * Sucht nach einem Spielstand auf dem Rechner und lädt diesen, falls vorhanden.
     * Wenn Spielstand nicht geladen werden konnte, gibt Methode eine Fehlermeldung auf der Konsole aus.
     */
     private void loadGame() {
@@ -220,7 +221,7 @@ public class EscapeApp {
 
     /**
     *
-    * Prüft ob das Spiel gestartet worden ist und gibt boolean Wert zurück.
+    * Prüft, ob das Spiel gestartet worden ist und gibt boolean Wert zurück.
     * @return boolean Wert der zeigt, ob Spiel existiert
     */
     private boolean isGameRunning() {
@@ -243,6 +244,31 @@ public class EscapeApp {
     */
     private boolean hasSavedGame() {
         return new File(SAVE_FILE_NAME).exists();
+    }
+
+    private void showIntro(){
+        System.out.println("============================");
+        System.out.println("Intro");
+        System.out.println("\n");
+        System.out.println("It's a normal high school day. You barely manage to get out of bed and nearly missed your train to the HTW campus.");
+        System.out.println(" On the way you look at your schedule plan and notice that the next lecture is programming with Prof. Majuntke.");
+        System.out.println("You enter the room and notice that no one is there. Then you remember that today's lesson is hosted on Zoom.");
+        System.out.println("As you return to the front door to leave the campus you notice, that its locked. Suddenly you can hear Prof. Majuntke through the speaker:");
+        System.out.println("\"Hello Student. Today is your lucky day where you can win a special certificate from me,");
+        System.out.println("which will guarantee you any job related to programming you can imagine, but it comes with a cost.");
+        System.out.println("Collect all the 5 signatures from the Lecturers and find me but look out. There could be dangers awaiting you on the way.....\"");
+        System.out.println("\n");
+        System.out.println("(1) start");
+
+        while(true){
+        String input =readUserInput();
+            if(input.equals("1")){
+                break;
+            }
+            else{
+                System.out.println("Invalid input. Please choose a correct number (1)");
+            }
+        }
     }
 
 }

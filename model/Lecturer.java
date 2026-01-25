@@ -50,7 +50,7 @@ public class Lecturer implements Serializable {
         if (hero.getKillCounter() >=2){
             return true;
         }
-        System.out.println("You couldn't collect that signature. You need to kill 2 Aliens first to obtain that skill");
+        System.out.println("\n" + "You couldn't collect that signature. You need to kill 2 Aliens first to obtain that skill");
         return false;
     }
 

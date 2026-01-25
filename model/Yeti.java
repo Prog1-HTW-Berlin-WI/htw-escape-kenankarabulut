@@ -2,7 +2,6 @@ package model;
 
 public class Yeti extends Alien {
     
-    private int lifePoints;
     
     /**
      * Konstruktor für die Klasse Yeti (Unterklasse von Alien).
@@ -32,18 +31,5 @@ public class Yeti extends Alien {
     public void printMenu() {
         super.printMenu();
     }
-
-
-
-    public int getLifePoints() {
-        return lifePoints;
-    }
-
-
-
-    public void setLifePoints(int lifePoints) {
-        this.lifePoints = lifePoints;
-    }
-    
     
 }

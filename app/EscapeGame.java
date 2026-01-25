@@ -39,7 +39,7 @@ public class EscapeGame {
     *
     * Konstruktor für die Klasse Escapegame
     * Erzeugt ein neues EscapeGame und setzt einen Wert für seine Attribute fest
-    * Die Begrüßung variiert danach ob das Alien freundlich gesinnt ist oder nicht
+    * Die Begrüßung variiert je nachdem, ob das Alien freundlich gesinnt ist oder nicht
     */
     public EscapeGame(Hero hero) {
         this.hero = hero;
@@ -64,7 +64,7 @@ public class EscapeGame {
 
     /**
     *
-    * Prüft ob das Spiel gestartet worden ist und gibt boolean Wert zurück
+    * Prüft, ob das Spiel gestartet worden ist und gibt boolean Wert zurück
     * @return boolean Wert der zeigt, ob Spiel läuft bzw. gestartet wurde
     */
     public boolean isGameRunning() {
@@ -74,7 +74,7 @@ public class EscapeGame {
     /**
     *
     * Setzt den Zustand des Spiels auf laufend oder nicht laufend
-    * @param boolean gameRunning, true oder false je nach dem ob Spiel läuft oder nicht
+    * @param boolean gameRunning, true oder false je nach dem, ob Spiel läuft oder nicht
     */
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
@@ -101,8 +101,7 @@ public class EscapeGame {
    
     /**
     *
-    * Zeigt das Spielmenü an und liest die Eingabe des Spielern.
-    * 
+    * Zeigt das Spielmenü an und liest die Eingabe des Spielers.
     */
     public void run() {
         while(gameRunning == true){
@@ -127,7 +126,7 @@ public class EscapeGame {
     
     /**
      * Nimmt die Eingabe des Spielers und führt die jeweilige Aktion aus.
-     * gibt bei ungültiger Eingabe eine Fehlermeldung aus.
+     * Gibt bei ungültiger Eingabe eine Fehlermeldung aus.
      * @param menuInput
      */
     private void handleUserInput(String menuInput) {
@@ -156,7 +155,7 @@ public class EscapeGame {
     /**
      * Startet eine Erkundung des Spielers.
      * Zu 20% betritt man den leeren Raum.
-     * Zu 52% trifft man auf ein Alien -> Die Wahrscheinlichkeit wird nochmal auf 4 Aliens geteilt.
+     * Zu 52% trifft man auf ein Alien -> Die Wahrscheinlichkeit wird nochmal auf 4 Aliens aufgeteilt.
      * Zu 28% trifft man auf einen Übungsleiter (einer von 5 verschiedenen).
      * Nach jeder Erkundung hat der Spieler die Wahl eine neue Erkundung direkt zu starten.
      * ->exploring bleibt true und eine neue Erkundung wird gestartet.
@@ -176,23 +175,24 @@ public class EscapeGame {
             else if(possibility < 23){
                 System.out.println("You have encountered the Yeti.....");
                     
-                alien1.setLifePoints(200); 
-                alienEncounter(alien1, 25, 60); 
+                alien1.setLifePoints(150); 
+                alienEncounter(alien1, 25, 17); 
                 exploring = askNewExploration();
             }
             else if(possibility <33){
                 System.out.println("You have encountered Snailo the great.....");
                 
-                alien3.setLifePoints(30);
-                alienEncounter(alien3, 10, 25);
+                
+                alien3.setLifePoints(25);
+                alienEncounter(alien3, 10, 3);
                 exploring = askNewExploration();
         
             }
             else if(possibility < 57){
                 System.out.println("You have encountered Siomon the destroyer.....");
                     
-                alien4.setLifePoints(12);
-                alienEncounter(alien4, 15,10);
+                alien4.setLifePoints(7);
+                alienEncounter(alien4, 15,1);
                 exploring = askNewExploration();
             }
             else if(possibility < 72){
@@ -206,7 +206,7 @@ public class EscapeGame {
             int roomRnndm = (int) (Math.random() * 5);
             HTWRoom room = rooms[roomRnndm];
 
-                if(room.getLecturer() != null){
+                if(room.getLecturer() != null && !hero.isSignedExerciseLeader(room.getLecturer())){
                     exploring = lecturerEncounter(room.getLecturer(), room);
                 }
             }
@@ -235,10 +235,10 @@ public class EscapeGame {
     /**
      * Der Spieler hat die Wahl nach einer Erkundung direkt eine neue zu starten oder ins Menü zurückzukehren.
      * Die Methode liest die Eingabe des Spielers.
-     * Je nach dem für was sich der Spieler entscheidet, gibt die Methode true oder false zurück.
+     * Je nach dem, wofür sich der Spieler entscheidet, gibt die Methode true oder false zurück.
      * 
      * @return true falls Spieler neue Erkundung startet.
-     * @return false falls Spieler in Spielmenü zurrückkehren will.
+     * @return false falls Spieler in Spielmenü zurückkehren will.
      */
     public boolean askNewExploration(){
         while(true){
@@ -265,7 +265,7 @@ public class EscapeGame {
     
 
     /**
-     * Methode falls ein Spieler auf einen Übungsleiter trifft.
+     * Methode für den Fall, dass ein Spieler auf einen Übungsleiter trifft.
      * Zeigt Raumbeschreibung mit jeweiligem Übungsleiter an.
      * Der Spieler hat die Wahl nach einer Unterschrift zu fragen oder den Raum zu verlassen.
      * @param lecturer Übungsleiter dem man begegnet.
@@ -432,10 +432,10 @@ public class EscapeGame {
      * Im Falle eines Kampfes kann der Spieler kämpfen oder Fliehen.
      * Nach Aktion des Heros führt das Alien eine Attacke aus(kann Hero treffen oder verfehlen).
      * Kampf ist abhängig vom Alien und Anzahl der Schadenspunkte, welche das Alien verursacht.
-     * Wärend des Kampfes wird eine kleine Statusanzeige des Heros und des Aliens angezeigt.
+     * Während des Kampfes wird eine kleine Statusanzeige des Heros und des Aliens angezeigt.
      * @param alien Alien welches man bekämpft
      * @param amount Schadenspunkte welche das Alien verursacht 
-     * @param exp Erfahrenspunkte welche man bekommt nachdem Alien besiegt wurde
+     * @param exp Erfahrungspunkte welche man bekommt nachdem Alien besiegt wurde
      */
     public void alienEncounter(Alien alien, int amount, int exp){
         System.out.println("What are you going to do?");
@@ -452,8 +452,8 @@ public class EscapeGame {
                 int heroDamage = hero.attack();
                 alien.takeDamage(heroDamage);
                 if(alien.isDefeated()){
-                    System.out.println("The Alien has been defeated!");
                     hero.addExperiencePoints(exp);
+                    hero.killCounter++;
                     System.out.println("Returning to the gamemenu......");
                 }
             }
@@ -481,7 +481,7 @@ public class EscapeGame {
 
     /**
      * Wird angezeigt wenn der Hero das Spiel verliert.
-     * beendet das Spiel.
+     * Beendet das Spiel.
      */
     private void looseScreen(){
         System.out.println("----------------------");
