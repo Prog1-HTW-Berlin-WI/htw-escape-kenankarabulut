@@ -33,7 +33,7 @@ public class EscapeApp {
 
         while (true) {
             app.showMainMenu();
-            String choice = app.readUserInput();
+            String choice = readUserInput();
             app.handleUserInput(choice);
             System.out.println("====================");
         }
@@ -48,7 +48,7 @@ public class EscapeApp {
         System.out.println("You're in the main menu");
         System.out.println("What do you want to do next?");
 
-        if(!isGameRunning())
+        if(!isGameRunning() || isGameFinished())
         System.out.println("(1) Start new game");
         if(isGameRunning())
         System.out.println("(2) resume game");
@@ -84,7 +84,7 @@ public class EscapeApp {
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
-                if(!isGameRunning()){
+                if(!isGameRunning() || isGameFinished()){
                 this.startGame();
                 break;
                 }
@@ -143,17 +143,26 @@ public class EscapeApp {
     * Eingabe des Spielers ist Name des Heros.
     */
     private void startGame() {
-        System.out.println("==========================================");
-        System.out.println("Create your hero:");
-        System.out.println("\n");
-        System.out.println("please enter the name of your hero:");
-        System.out.println("(max. 10 letters)");
-        System.out.println("\n");
+        while(true){
+            System.out.println("==========================================");
+            System.out.println("Create your hero:");
+            System.out.println("\n");
+            System.out.println("please enter the name of your hero:");
+            System.out.println("(max. 10 letters)");
+            System.out.println("\n");
 
-        String nameInput = readUserInput();
-        Hero myHero = new Hero(nameInput);
-        this.game = new EscapeGame(myHero);
-        resumeGame();
+            String nameInput = readUserInput();
+            if(nameInput.length()<=10 && nameInput.length()>1){
+                Hero myHero = new Hero(nameInput);
+                this.game = new EscapeGame(myHero);
+                resumeGame();
+                break;
+            }
+            else{
+                System.out.println("==========================================");
+                System.out.println("Invalid name. Please try again (max. 10 letters)");
+            }
+        }
     }
 
     /**

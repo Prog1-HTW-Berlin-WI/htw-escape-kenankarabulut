@@ -16,7 +16,7 @@ public class Hero implements Serializable {
     private String name;
     private int healthPoints = 50;
     private int experiencePoints = 0;
-    private int killCounter = 2;
+    private int killCounter = 0;
     private Lecturer[] signedExerciseLeaders = new Lecturer [5];
     public int lectCounter=0;
 
@@ -129,10 +129,10 @@ public class Hero implements Serializable {
      */
     public boolean flee(){
         if((Math.random() * 100) < 42){
+            System.out.println("=======================");
             System.out.println("You've successfully gotten away!");
             return true;
         }
-    System.out.println("The Escape has failed!");
     return false;
     }
 
@@ -203,6 +203,7 @@ public class Hero implements Serializable {
      */
     public void addExperiencePoints(int experiencePoints){
         this.experiencePoints += experiencePoints;
+        System.out.println("You have gained" + experiencePoints + "experience-points!") ;
     }
 
     /**

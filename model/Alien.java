@@ -18,9 +18,6 @@ public abstract class Alien {
     private String greeting;
 
 
-     
-    
-
     /**
      * Konstruktor für die Klasse Alien
      * Erzeugt neues Alien mit seinen Attributen
@@ -51,6 +48,13 @@ public abstract class Alien {
     return name;
     }
 
+    public boolean isFriendly() {
+        return friendly;
+    }
+
+    public void setFriendly(boolean friendly) {
+        this.friendly = friendly;
+    }
 
     /**
     *

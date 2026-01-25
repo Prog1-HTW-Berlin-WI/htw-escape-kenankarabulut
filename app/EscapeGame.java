@@ -110,8 +110,8 @@ public class EscapeGame {
         
         
         System.out.println("-------------------");
-        System.out.println("roundCounter: " + this.roundCounter);
-        System.out.println("gamemenu:");
+        System.out.println("Round-Counter: " + this.roundCounter);
+        System.out.println("Game-Menu:");
         System.out.println("\n");
         System.out.println("(1) explore HTW campus");
         System.out.println("(2) show hero status");
@@ -176,24 +176,24 @@ public class EscapeGame {
             else if(possibility < 23){
                 System.out.println("You have encountered the Yeti.....");
                     
-                    alienEncounter(alien1, 25);
-                    alien1.setLifePoints(200); 
-                    exploring = askNewExploration();
+                alien1.setLifePoints(200); 
+                alienEncounter(alien1, 25, 60); 
+                exploring = askNewExploration();
             }
             else if(possibility <33){
                 System.out.println("You have encountered Snailo the great.....");
                 
-                    alienEncounter(alien3, 10);
-                    alien3.setLifePoints(30);
-                    exploring = askNewExploration();
+                alien3.setLifePoints(30);
+                alienEncounter(alien3, 10, 25);
+                exploring = askNewExploration();
         
             }
             else if(possibility < 57){
                 System.out.println("You have encountered Siomon the destroyer.....");
                     
-                    alienEncounter(alien4, 15);
-                    alien4.setLifePoints(12);
-                    exploring = askNewExploration();
+                alien4.setLifePoints(12);
+                alienEncounter(alien4, 15,10);
+                exploring = askNewExploration();
             }
             else if(possibility < 72){
                 System.out.println("You have encountered Crazy frog.....");
@@ -213,7 +213,6 @@ public class EscapeGame {
         }
         if(roundCounter >=24 || !hero.isOperational()){
             looseScreen();
-            gameFinished = true;
         }
         if(hero.lectCounter >=5){
             int questRnndm = (int) (Math.random() * 3);
@@ -374,9 +373,9 @@ public class EscapeGame {
             switch (meditationinput) {
                 case "1":
                     if(didBreak == false){
-                    hero.regenerate(false);
-                    didBreak = true;
-                    break;
+                        hero.regenerate(false);
+                        didBreak = true;
+                        break;
                     }
                     else{
                         System.out.println("You allready took a short break. You need to start a new round first!");
@@ -391,8 +390,8 @@ public class EscapeGame {
                     System.out.println("returning to the gamemenu........");
                     return;
                 default:
-                System.out.println("Invalid input. Please choose a correct number between 1 and 3");
-                break;
+                    System.out.println("Invalid input. Please choose a correct number between 1 and 3");
+                    break;
             }
         }
     }
@@ -436,8 +435,9 @@ public class EscapeGame {
      * Wärend des Kampfes wird eine kleine Statusanzeige des Heros und des Aliens angezeigt.
      * @param alien Alien welches man bekämpft
      * @param amount Schadenspunkte welche das Alien verursacht 
+     * @param exp Erfahrenspunkte welche man bekommt nachdem Alien besiegt wurde
      */
-    public void alienEncounter(Alien alien, int amount){
+    public void alienEncounter(Alien alien, int amount, int exp){
         System.out.println("What are you going to do?");
         while(hero.isOperational() && !alien.isDefeated()){
             alien.printMenu();
@@ -452,12 +452,19 @@ public class EscapeGame {
                 int heroDamage = hero.attack();
                 alien.takeDamage(heroDamage);
                 if(alien.isDefeated()){
-                    System.out.println("The Alien has been defeated! Returning to the gamemenu....");
+                    System.out.println("The Alien has been defeated!");
+                    hero.addExperiencePoints(exp);
+                    System.out.println("Returning to the gamemenu......");
                 }
             }
             else if(choice.equals("2")){
-                hero.flee();
-                return;
+                if(hero.flee() == true){
+                    return;
+                }
+                else{
+                    System.out.println("The Escape has failed!");
+                    System.out.println("=======================");
+                }
             }
             else{
                 System.out.println("Invalid input. Please choose a correct number (1)");
@@ -468,7 +475,6 @@ public class EscapeGame {
                 int alienDamage = alien.attack(alien, amount);
                 hero.takeDamage(alienDamage);
             }
-
         }
     }
 
@@ -499,11 +505,13 @@ public class EscapeGame {
         while(true){
             String input = EscapeApp.readUserInput();
             if(input.equals("1")){
-                gameFinished = true;
-                gameRunning = false;
+                setGameRunning(false);
+                setGameFinished(true);
+                break;
             }
             else{
                 System.out.println("Invalid input. Please choose a correct number (1)");
+                break;
             }
         }
     }
@@ -531,11 +539,13 @@ public class EscapeGame {
         while(true){
             String choice = EscapeApp.readUserInput();
             if(choice.equals("1")){
-               gameFinished = true;
-               gameRunning = false; 
+               setGameFinished(true);
+               setGameRunning(true);
+               break;
             }
             else{
                 System.out.println("Invalid input. Please choose a correct number (1)");
+                break;
             }
         }
     }
